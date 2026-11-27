@@ -102,6 +102,9 @@ export const config = {
 export function validateStartupConfig(): { warnings: string[] } {
   const warnings: string[] = [];
   if (config.nodeEnv === "production" && !config.isTest) {
+    if (!config.mongodbUri) {
+      throw new Error("HireZilla Config] MongoDbURI is required in production");
+    }
     if (!configuredSessionSecret || configuredSessionSecret.length < 24) {
       throw new Error(
         "[HireZilla Config] SESSION_SECRET (or JWT_SECRET) >= 24 chars is required in production."
