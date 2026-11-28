@@ -60,7 +60,7 @@ jobs:
 
       - name: Start containers
         run: docker compose up -d
-
+#Rectified Syntax error
       - name: Smoke test
         run: |
           curl -fsS --retry 15 --retry-delay 10 --retry-connrefused --retry-all-errors http://localhost:5173/health
