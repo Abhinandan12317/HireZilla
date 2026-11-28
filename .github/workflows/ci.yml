@@ -64,7 +64,7 @@ jobs:
       - name: Smoke test
         run: |
           curl -fsS --retry 15 --retry-delay 10 --retry-connrefused --retry-all-errors http://localhost:5173/health
-          for i in $(seq 1 20); do
+          for i in $(seq 1 5); do
             code=$(curl -s -o /dev/null -w '%{http_code}' http://localhost:5173/api/auth/me)
             echo "attempt $i: api via proxy: $code"
             if [ "$code" != "502" ] && [ "$code" != "000" ]; then exit 0; fi
