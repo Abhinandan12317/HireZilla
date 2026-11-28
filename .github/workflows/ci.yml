@@ -8,7 +8,6 @@ on:
 jobs:
   checks:
     runs-on: ubuntu-latest
-    environment: CI_Secrets
     steps:
       - name: Clone repo
         uses: actions/checkout@v6
@@ -25,6 +24,7 @@ jobs:
   docker:
     needs: checks
     runs-on: ubuntu-latest
+    environment: CI_Secrets
     steps:
       - name: Clone repo
         uses: actions/checkout@v6
