@@ -1,0 +1,19 @@
+services:
+  backend:
+    image: hirezilla-backend:v1
+
+    ports:
+    - 4000:4000
+
+    env_file:
+    - ./backend/.env
+  frontend:
+    image: hirezilla-frontend:v1
+
+    ports:
+    - 5173:5173
+
+    env_file:
+    - ./frontend/.env
+
+

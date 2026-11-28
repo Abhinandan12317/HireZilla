@@ -18,15 +18,9 @@ RUN npm ci
 #Keeping the frontend and import architecture same, i am just cloning it and building in the similar world as of local
 COPY frontend ./
 COPY shared /app/shared
-RUN npm run build:frontend
+RUN npm run build
 #A command that produces server.mjs
-RUN npx esbuild server.ts 
-    --bundle 
-    --platform=node 
-    --format=esm 
-    --packages=external 
-    --outfile=server.mjs
-
+RUN npx esbuild server.ts --bundle --platform=node --format=esm --packages=external --outfile=server.mjs
 
 FROM node:22.14.0
 
