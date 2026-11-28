@@ -8,6 +8,7 @@ on:
 jobs:
   checks:
     runs-on: ubuntu-latest
+    environment: CI_Secrets
     steps:
       - name: Clone repo
         uses: actions/checkout@v6
@@ -62,7 +63,7 @@ jobs:
 
       - name: Smoke test
         run: |
-          curl -fsS --retry 15 --retry-delay 2 --retry-connrefused --retry-all-errors http://localhost:5173/health
+          curl -fsS --retry 15 --retry-delay 10 --retry-connrefused --retry-all-errors http://localhost:5173/health
           code=$(curl -s -o /dev/null -w '%{http_code}' http://localhost:5173/api/auth/me)
           echo "api via proxy: $code"
           test "$code" != "502" -a "$code" != "000"
