@@ -1,0 +1,38 @@
+name: Continuous Integration
+
+on:
+  push: 
+    branches:
+      - main
+jobs:
+  first-job:
+    name: Build backend
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout Repository
+    - uses: actions/checkout@v6
+# usues "actions" account to run "checkout" repository  in "ubuntu-latest"
+    - name: validate docker configuration  run
+      run: docker compose config
+    
+    - name: build services
+      run: docker compose build
+
+    - name: run services
+      run: docker compose docker-compose.yaml up
+      if: failure()
+      run: docker compose logs
+      
+    - name: Start Containers
+      run: docker compose up
+      if: failure()
+      run: docker compose push
+
+    - name: Check running Containers
+      run: docker compose ps  
+
+    - name: Stop Containers
+      if: always()
+      run: docker compose down
+    
+

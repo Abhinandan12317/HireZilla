@@ -1,6 +1,10 @@
 services:
   backend:
     image: hirezilla-backend:v1
+    build: 
+      context: .
+      dockerfile: backend/Dockerfile
+
 
     ports:
     - 4000:4000
@@ -9,6 +13,10 @@ services:
     - ./backend/.env
   frontend:
     image: hirezilla-frontend:v1
+
+    build: 
+      context: .
+      dockerfile: frontend/Dockerfile
 
     ports:
     - 5173:5173
