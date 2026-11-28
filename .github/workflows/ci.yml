@@ -61,12 +61,16 @@ jobs:
       - name: Start containers
         run: docker compose up -d
 
-      - name: Smoke test
+            - name: Smoke test
         run: |
           curl -fsS --retry 15 --retry-delay 10 --retry-connrefused --retry-all-errors http://localhost:5173/health
-          code=$(curl -s -o /dev/null -w '%{http_code}' http://localhost:5173/api/auth/me)
-          echo "api via proxy: $code"
-          test "$code" != "502" -a "$code" != "000"
+          for i in $(seq 1 20); do
+            code=$(curl -s -o /dev/null -w '%{http_code}' http://localhost:5173/api/auth/me)
+            echo "attempt $i: api via proxy: $code"
+            if [ "$code" != "502" ] && [ "$code" != "000" ]; then exit 0; fi
+            sleep 5
+          done
+          exit 1
 
       - name: Logs on failure
         if: failure()
